@@ -55,7 +55,12 @@ const map = L.map('map').setView([52.1, 19.4], 6);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
-
+const kluczIcon = L.icon({
+  iconUrl: 'klucz.png',
+  iconSize: [36, 36],      // rozmiar ikony
+  iconAnchor: [18, 36],    // punkt "wbicia" w mapę
+  popupAnchor: [0, -36]    // gdzie otwiera się popup
+});
 /* ===============================
    KOPIOWANIE TEKSTU
 ================================ */
@@ -80,7 +85,7 @@ fetch('serwisanci.json')
 
       if (!s.lat || !s.lon) return;
 
-      const marker = L.marker([s.lat, s.lon]).addTo(map);
+      const marker = L.marker([s.lat, s.lon], { icon: kluczIcon }).addTo(map);
 
       marker.bindPopup(`
         <div class="popup">
