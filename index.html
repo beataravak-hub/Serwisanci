@@ -4,13 +4,10 @@
 <meta charset="utf-8" />
 <title>Mapa serwisantów</title>
 
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet/dist/leaflet.css"
-/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <style>
-  body { margin: 0; }
+  body { margin: 0; font-family: Arial, sans-serif; }
   #map { height: 100vh; }
 
   .popup input {
@@ -60,11 +57,12 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 /* ===============================
-   FUNKCJA KOPIOWANIA
+   KOPIOWANIE TEKSTU
 ================================ */
 function copyFrom(id) {
-  const text = document.getElementById(id).innerText;
-  navigator.clipboard.writeText(text);
+  const el = document.getElementById(id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.innerText);
   alert("Skopiowano do schowka");
 }
 
@@ -72,50 +70,52 @@ function copyFrom(id) {
    ŁADOWANIE SERWISANTÓW
 ================================ */
 fetch('serwisanci.json')
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) throw new Error("Nie można wczytać serwisanci.json");
+    return res.json();
+  })
   .then(data => {
+
     data.forEach(s => {
 
-      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(s.adres + ', ' + s.miasto)}`)
-        .then(r => r.json())
-        .then(loc => {
+      if (!s.lat || !s.lon) return;
 
-          if (!loc[0]) return;
+      const marker = L.marker([s.lat, s.lon]).addTo(map);
 
-          const lat = loc[0].lat;
-          const lon = loc[0].lon;
+      marker.bindPopup(`
+        <div class="popup">
+          <b>${s.nazwa}</b><br>
+          ${s.miasto}<br>
+          <small>${s.opis || ""}</small><br><br>
 
-          const marker = L.marker([lat, lon]).addTo(map);
+          📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
+          ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
 
-          marker.bindPopup(`
-  <div class="popup">
-    <b>${s.nazwa}</b><br>
-    ${s.miasto}<br>
-    <small>${s.opis || ""}</small><br><br>
+          💰 Stawka: ${s.stawka ?? stawkaDomyslna} zł/km<br><br>
 
-    📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
-    ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
+          📦 <b>Adres do wysyłki</b><br>
+          <span id="wys${s.id}">${s.adres_do_wysylki || "-"}</span>
+          <span class="copy" onclick="copyFrom('wys${s.id}')">📋 kopiuj</span><br><br>
 
-    📦 <b>Adres do wysyłki</b><br>
-    <span id="wys${s.id}">${s.adres_do_wysylki}</span>
-    <span class="copy" onclick="copyFrom('wys${s.id}')">📋 kopiuj</span><br><br>
+          📮 <b>InPost</b><br>
+          <span id="inp${s.id}">${s.inpost || "-"}</span>
+          <span class="copy" onclick="copyFrom('inp${s.id}')">📋 kopiuj</span><br><br>
 
-    📮 <b>InPost</b><br>
-    <span id="inp${s.id}">${s.inpost}</span>
-    <span class="copy" onclick="copyFrom('inp${s.id}')">📋 kopiuj</span><br><br>
+          🧾 <b>Adres fakturowy</b><br>
+          <span id="fak${s.id}">${s.adres_fakturowy || "-"}</span>
+          <span class="copy" onclick="copyFrom('fak${s.id}')">📋 kopiuj</span><br><br>
 
-    🧾 <b>Adres fakturowy</b><br>
-    <span id="fak${s.id}">${s.adres_fakturowy}</span>
-    <span class="copy" onclick="copyFrom('fak${s.id}')">📋 kopiuj</span><br><br>
-
-    <input id="a${s.id}" placeholder="Adres klienta">
-    <button onclick="route(${lat}, ${lon}, 'a${s.id}', ${s.stawka || stawkaDomyslna})">
-      Wyznacz trasę i koszt
-    </button>
-  </div>
-`);
-        });
+          <input id="a${s.id}" placeholder="Adres klienta">
+          <button onclick="route(${s.lat}, ${s.lon}, 'a${s.id}', ${s.stawka ?? stawkaDomyslna})">
+            Wyznacz trasę i koszt
+          </button>
+        </div>
+      `);
     });
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Błąd wczytywania danych serwisantów");
   });
 
 /* ===============================
