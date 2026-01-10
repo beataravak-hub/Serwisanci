@@ -10,6 +10,14 @@
 </style>
 </head>
 <body>
+.copy {
+  cursor: pointer;
+  margin-left: 6px;
+  color: #0077cc;
+}
+.copy:hover {
+  text-decoration: underline;
+}
 
 <div id="map"></div>
 
@@ -43,6 +51,18 @@ fetch('serwisanci.json')
   📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
   ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
 
+  📦 <b>Adres do wysyłki</b><br>
+  ${s.adres_do_wysylki}
+  <span class="copy" onclick="copyText('${s.adres_do_wysylki}')">📋 kopiuj</span><br><br>
+
+  📮 <b>InPost</b><br>
+  ${s.inpost}
+  <span class="copy" onclick="copyText('${s.inpost}')">📋 kopiuj</span><br><br>
+
+  🧾 <b>Adres fakturowy</b><br>
+  ${s.adres_fakturowy}
+  <span class="copy" onclick="copyText('${s.adres_fakturowy}')">📋 kopiuj</span><br><br>
+
   <input placeholder="Adres klienta" id="a${s.id}">
   <button onclick="route(${lat},${lon},'a${s.id}',${s.stawka || stawkaDomyslna})">
     Wyznacz trasę i koszt
@@ -51,7 +71,10 @@ fetch('serwisanci.json')
    });
  });
 });
-
+function copyText(text) {
+  navigator.clipboard.writeText(text);
+  alert("Skopiowano do schowka");
+}
 let routeLayer;
 function route(lat, lon, inputId, rate){
  const address = document.getElementById(inputId).value;
