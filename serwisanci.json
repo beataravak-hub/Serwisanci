@@ -11,7 +11,7 @@
     "adres_do_wysylki": "Mirosław Piechowski ul. Słoneczna 4a 77-233 Zielin",
     "inpost": "ZINN01BAPP ul. Główna 28 77-233 Zielin",
     "adres_fakturowy": "TIM-BUD Firma Ogólnobudowlana Mirosław Piechowski ul. Sportowa 57A 76-200 Słupsk NIP: 8392414194",
-    "stawka": "1,5"
+    "stawka": "1.5"
   },
   {
     "id": 2,
@@ -27,6 +27,6 @@
     "inpost": "(brak danych)",
     "adres_fakturowy": "JAR-TECH Jarosław Owczarek ul. Łagiewnicka 80/98/366 91-456 Łódź NIP: 7261456412",
 
-    "stawka": "1,2"
+    "stawka": "1.2"
   }
 ]
