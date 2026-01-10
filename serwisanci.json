@@ -4,29 +4,25 @@
     "nazwa": "TIM-BUD Mirosław Piechowski",
     "miasto": "Słupsk",
     "adres": "Słupsk, Sportowa 57",
-        "telefon": "781 284 266",
+    "telefon": "781 284 266",
     "email": "tim-bud@wp.pl",
     "opis": "rejon: Słupsk, Koszalin",
-
     "adres_do_wysylki": "Mirosław Piechowski ul. Słoneczna 4a 77-233 Zielin",
     "inpost": "ZINN01BAPP ul. Główna 28 77-233 Zielin",
     "adres_fakturowy": "TIM-BUD Firma Ogólnobudowlana Mirosław Piechowski ul. Sportowa 57A 76-200 Słupsk NIP: 8392414194",
-    "stawka": 1,5
+    "stawka": 1.5
   },
   {
     "id": 2,
     "nazwa": "JAR-TECH Jarosław Owczarek",
     "miasto": "Łódź",
     "adres": "Łódź, Łagiewnicka 80",
-    
     "telefon": "504 221 410",
     "email": "abcjarek@vp.pl",
     "opis": "bez wysyłek paletowych",
-
     "adres_do_wysylki": "JAR-TECH Jarosław Owczarek ul. Zgierska 69 (I piętro) 91-463 Łódź",
     "inpost": "(brak danych)",
     "adres_fakturowy": "JAR-TECH Jarosław Owczarek ul. Łagiewnicka 80/98/366 91-456 Łódź NIP: 7261456412",
-
-    "stawka": 1,2
+    "stawka": 1.2
   }
 ]
