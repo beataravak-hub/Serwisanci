@@ -62,7 +62,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 /* ===============================
    FUNKCJA KOPIOWANIA
 ================================ */
-function copyText(text) {
+function copyFrom(id) {
+  const text = document.getElementById(id).innerText;
   navigator.clipboard.writeText(text);
   alert("Skopiowano do schowka");
 }
@@ -87,33 +88,32 @@ fetch('serwisanci.json')
           const marker = L.marker([lat, lon]).addTo(map);
 
           marker.bindPopup(`
-            <div class="popup">
-              <b>${s.nazwa}</b><br>
-              ${s.miasto}<br>
-              <small>${s.opis || ""}</small><br><br>
+  <div class="popup">
+    <b>${s.nazwa}</b><br>
+    ${s.miasto}<br>
+    <small>${s.opis || ""}</small><br><br>
 
-              📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
-              ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
+    📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
+    ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
 
-              📦 <b>Adres do wysyłki</b><br>
-              ${s.adres_do_wysylki}
-              <span class="copy" onclick="copyText('${s.adres_do_wysylki}')">📋 kopiuj</span><br><br>
+    📦 <b>Adres do wysyłki</b><br>
+    <span id="wys${s.id}">${s.adres_do_wysylki}</span>
+    <span class="copy" onclick="copyFrom('wys${s.id}')">📋 kopiuj</span><br><br>
 
-              📮 <b>InPost</b><br>
-              ${s.inpost}
-              <span class="copy" onclick="copyText('${s.inpost}')">📋 kopiuj</span><br><br>
+    📮 <b>InPost</b><br>
+    <span id="inp${s.id}">${s.inpost}</span>
+    <span class="copy" onclick="copyFrom('inp${s.id}')">📋 kopiuj</span><br><br>
 
-              🧾 <b>Adres fakturowy</b><br>
-              ${s.adres_fakturowy}
-              <span class="copy" onclick="copyText('${s.adres_fakturowy}')">📋 kopiuj</span><br><br>
+    🧾 <b>Adres fakturowy</b><br>
+    <span id="fak${s.id}">${s.adres_fakturowy}</span>
+    <span class="copy" onclick="copyFrom('fak${s.id}')">📋 kopiuj</span><br><br>
 
-              <input id="a${s.id}" placeholder="Adres klienta">
-              <button onclick="route(${lat}, ${lon}, 'a${s.id}', ${s.stawka || stawkaDomyslna})">
-                Wyznacz trasę i koszt
-              </button>
-            </div>
-          `);
-
+    <input id="a${s.id}" placeholder="Adres klienta">
+    <button onclick="route(${lat}, ${lon}, 'a${s.id}', ${s.stawka || stawkaDomyslna})">
+      Wyznacz trasę i koszt
+    </button>
+  </div>
+`);
         });
     });
   });
