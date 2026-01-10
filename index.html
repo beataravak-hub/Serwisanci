@@ -125,6 +125,9 @@ let routeLayer;
 
 function route(lat, lon, inputId, rate) {
 
+  rate = Number(rate);
+  if (isNaN(rate)) rate = stawkaDomyslna;
+
   const address = document.getElementById(inputId).value;
   if (!address) {
     alert("Wpisz adres klienta");
