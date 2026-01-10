@@ -36,13 +36,18 @@ fetch('serwisanci.json')
 
      const marker = L.marker([lat, lon]).addTo(map);
      marker.bindPopup(`
-       <b>${s.nazwa}</b><br>
-       ${s.miasto}<br>
-       <input placeholder="Adres klienta" id="a${s.id}">
-       <button onclick="route(${lat},${lon},'a${s.id}',${s.stawka || stawkaDomyslna})">
-         Wyznacz trasę
-       </button>
-     `);
+  <b>${s.nazwa}</b><br>
+  ${s.miasto}<br>
+  <small>${s.opis || ""}</small><br><br>
+
+  📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
+  ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
+
+  <input placeholder="Adres klienta" id="a${s.id}">
+  <button onclick="route(${lat},${lon},'a${s.id}',${s.stawka || stawkaDomyslna})">
+    Wyznacz trasę i koszt
+  </button>
+`);
    });
  });
 });
