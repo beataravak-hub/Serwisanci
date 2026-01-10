@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Mapa serwisantów</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<style>
+#map { height: 100vh; }
+.popup input { width: 100%; margin-top: 5px; }
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+const stawkaDomyslna = 1.5;
+
+const map = L.map('map').setView([52.1, 19.4], 6);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+ attribution: '© OpenStreetMap'
+}).addTo(map);
+
+fetch('serwisanci.json')
+.then(res => res.json())
+.then(data => {
+ data.forEach(s => {
+   fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${s.adres},${s.miasto}`)
+   .then(r => r.json())
+   .then(loc => {
+     if (!loc[0]) return;
+     const lat = loc[0].lat;
+     const lon = loc[0].lon;
+
+     const marker = L.marker([lat, lon]).addTo(map);
+     marker.bindPopup(`
+       <b>${s.nazwa}</b><br>
+       ${s.miasto}<br>
+       <input placeholder="Adres klienta" id="a${s.id}">
+       <button onclick="route(${lat},${lon},'a${s.id}',${s.stawka || stawkaDomyslna})">
+         Wyznacz trasę
+       </button>
+     `);
+   });
+ });
+});
+
+let routeLayer;
+function route(lat, lon, inputId, rate){
+ const address = document.getElementById(inputId).value;
+ fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${address}`)
+ .then(r=>r.json())
+ .then(dest=>{
+   if(!dest[0]){ alert("Nie znaleziono adresu"); return;}
+   const dlat=dest[0].lat, dlon=dest[0].lon;
+
+   fetch(`https://router.project-osrm.org/route/v1/driving/${lon},${lat};${dlon},${dlat}?overview=full&geometries=geojson`)
+   .then(r=>r.json())
+   .then(res=>{
+     const km = res.routes[0].distance/1000;
+     const cost = (km*rate).toFixed(2);
+
+     if(routeLayer) map.removeLayer(routeLayer);
+     routeLayer = L.geoJSON(res.routes[0].geometry).addTo(map);
+
+     alert(`Dystans: ${km.toFixed(1)} km\nKoszt: ${cost} zł (orientacyjnie)`);
+   });
+ });
+}
+</script>
+</body>
+</html>
