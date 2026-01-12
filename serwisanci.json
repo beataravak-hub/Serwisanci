@@ -9,7 +9,7 @@
     "telefon": 502610222,
     "email": "tomaszukrainski@wp.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Zakład Remontowo-Budowlany Tomasz Maciej Ukraiński ul. M. Rapackiego 6A/5 71-467 Szczecin NIP: 8521153934",
     "stawka": "1,5"
@@ -24,7 +24,7 @@
     "telefon": 698730006,
     "email": "hydrotechnika1@tlen.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Hydrotechnika Wnętrz Maciej Nitecki ul. J. Matejki 6A/12 71-615 Szczecin NIP: 9551338478",
     "stawka": "1,5"
@@ -39,7 +39,7 @@
     "telefon": 600815094,
     "email": "kaspa.seba@op.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Firna Handlowo-Usługowa KASPA Kasprzak Sebastian ul. Orpiszewska 11 63-440 Raszków NIP: 6222017429",
     "stawka": "1,5"
@@ -54,7 +54,7 @@
     "telefon": 692125915,
     "email": "pinowik@op.pl",
     "opis": "",
-    "adres_do wysylki": "ANFAUS Piotr Nowik ul. Kraszewskiego 28a/16 15-025 Białystok",
+    "adres_do_wysylki": "ANFAUS Piotr Nowik ul. Kraszewskiego 28a/16 15-025 Białystok",
     "inpost": "(brak danych)",
     "adres_fakturowy": "ANFAUS Piotr Nowik ul. Antoniukowska 15b/22 15-740 Białystok NIP: 5422142475",
     "stawka": "1,5"
@@ -69,7 +69,7 @@
     "telefon": 505551553,
     "email": "serwis@budicom.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "BUDICOM Sławomir Szyperski ul. Altanowa 28/22 85-790 Bydgoszcz NIP: 5541020324",
     "stawka": "1,5"
@@ -84,7 +84,7 @@
     "telefon": 600231947,
     "email": "serwis@e-aquacomfort.pl",
     "opis": "",
-    "adres_do wysylki": "Marek Ziewiecki ul.Karmelowa 2 25-090 Dyminy",
+    "adres_do_wysylki": "Marek Ziewiecki ul.Karmelowa 2 25-090 Dyminy",
     "inpost": "(brak danych)",
     "adres_fakturowy": "F.U.H. AQUATECH Marek Ziewiecki ul. M.Jaworskiego 22/42 25-430 Kielce NIP: 7961301433",
     "stawka": "1,5"
@@ -99,7 +99,7 @@
     "telefon": 606831256,
     "email": "janusz_prokop@o2.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Janusz Prokop Firma Handlowo-Usługowa ul. M. Sarbiewskiego 11 37-700 Przemyśl NIP: 7951830986",
     "stawka": "1,5"
@@ -114,7 +114,7 @@
     "telefon": 504221410,
     "email": "abcjarek@vp.pl",
     "opis": "",
-    "adres_do wysylki": "JAR-TECH Jarosław Owczarek ul. Zgierska 69 (I piętro) 91-463 Łódź",
+    "adres_do_wysylki": "JAR-TECH Jarosław Owczarek ul. Zgierska 69 (I piętro) 91-463 Łódź",
     "inpost": "(brak danych)",
     "adres_fakturowy": "JAR-TECH Jarosław Owczarek ul.Łagiewnicka 80/98/366 91-456 Łódź NIP: 7261456412",
     "stawka": "1,5"
@@ -129,7 +129,7 @@
     "telefon": 603585899,
     "email": "serwvistom@gmail.com",
     "opis": "",
-    "adres_do wysylki": "SERWIS-TOM Tomasz Śliwiński ul. Wykładowa 46 51-520 Wrocław",
+    "adres_do_wysylki": "SERWIS-TOM Tomasz Śliwiński ul. Wykładowa 46 51-520 Wrocław",
     "inpost": "(brak danych)",
     "adres_fakturowy": "SERWIS-TOM Tomasz Śliwiński ul. Wykładowa 46 51-520 Wrocław NIP: 8961010156",
     "stawka": "1,5"
@@ -144,7 +144,7 @@
     "telefon": 603766650,
     "email": "aw.sas@wp.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Wojciech Augustyniak SAS Zakład Usługowo Handlowy ul.Opolska 140 52-014 Wrocław NIP: 9131156256",
     "stawka": "1,5"
@@ -159,7 +159,7 @@
     "telefon": 506526613,
     "email": "sandinst@onet.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Jarosław Maciejewski F.H.U \"SANDINST\" ul.Waryńskiego 18/3 72-320 Trzebiatów NIP: 8571160853",
     "stawka": "1,5"
@@ -174,7 +174,7 @@
     "telefon": 796901403,
     "email": "sanpri.system@wp.pl",
     "opis": "",
-    "adres_do wysylki": "SanPri System Artur Kus ul. F. Tredera 21/2 80-297 Banino",
+    "adres_do_wysylki": "SanPri System Artur Kus ul. F. Tredera 21/2 80-297 Banino",
     "inpost": "(brak danych)",
     "adres_fakturowy": "SanPri System Artur Kus ul. F. Tredera 21/2 80-297 Banino NIP: 5993114851",
     "stawka": "1,5"
@@ -189,7 +189,7 @@
     "telefon": 668868969,
     "email": "",
     "opis": "",
-    "adres_do wysylki": "Tomasz Kustra ul. Wileńska 4/2 73-110 Stargard",
+    "adres_do_wysylki": "Tomasz Kustra ul. Wileńska 4/2 73-110 Stargard",
     "inpost": "(brak danych)",
     "adres_fakturowy": "SanPri System Artur Kus ul. F. Tredera 21/2 80-297 Banino NIP: 5993114851",
     "stawka": "1,5"
@@ -204,7 +204,7 @@
     "telefon": 500245663,
     "email": "miwaj1@wp.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "MIWAJ Maciej Łukasik ul.Rycerza Blizbora 17/2 80-177 Gdańsk NIP: 5341372573",
     "stawka": "1,5"
@@ -219,7 +219,7 @@
     "telefon": "501 171 542",
     "email": "insttom@interia.pl",
     "opis": "",
-    "adres_do wysylki": "INST-TOM Tomasz Grecman ul. Zendek Strąków 13C/2 42-625 Ożarowice",
+    "adres_do_wysylki": "INST-TOM Tomasz Grecman ul. Zendek Strąków 13C/2 42-625 Ożarowice",
     "inpost": "(brak danych)",
     "adres_fakturowy": "INST-TOM Tomasz Grecman ul. Zendek Strąków 13C/2 42-625 Ożarowice NIP: 6271366578",
     "stawka": "1,5"
@@ -234,7 +234,7 @@
     "telefon": 604468370,
     "email": "piotr-glonek@wp.pl",
     "opis": "",
-    "adres_do wysylki": "Łazienki Marzeń ul. Górecka 79 61-483 Poznań",
+    "adres_do_wysylki": "Łazienki Marzeń ul. Górecka 79 61-483 Poznań",
     "inpost": "(brak danych)",
     "adres_fakturowy": "ABC Usługi Remontowe Piotr Glonek ul. Kolejowa 41/9 60-719 Poznań NIP: 8881919611",
     "stawka": "1,5"
@@ -249,7 +249,7 @@
     "telefon": 691096428,
     "email": "aquacerkfa@wp.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Serwis Armatury Sanitarnej Krzysztof Wiśniewski ul.B.Prusa 2/1 10-288 Olsztyn NIP: 7392756244",
     "stawka": "1,5"
@@ -264,7 +264,7 @@
     "telefon": 603539197,
     "email": "dokken@poczta.fm",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Jarosław Kołodziuk ul.Zygmunta Starego 14/5 21-500 Biała Podlaska NIP: 5372018401",
     "stawka": "1,5"
@@ -279,7 +279,7 @@
     "telefon": 531124973,
     "email": "biuroremeis@gmail.com",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Remigiusz Rotkis REMEIS ul.Zacisze 12 66-003 Przytok NIP: 8522488861",
     "stawka": "1,5"
@@ -294,7 +294,7 @@
     "telefon": 781284266,
     "email": "tim-bud@wp.pl",
     "opis": "",
-    "adres_do wysylki": "Mirosław Piechowski ul. Słoneczna 4a 77-233 Zielin",
+    "adres_do_wysylki": "Mirosław Piechowski ul. Słoneczna 4a 77-233 Zielin",
     "inpost": "ZINN01BAPP ul. Główna 28 77-233 Zielin",
     "adres_fakturowy": "TIM-BUD Firma Ogólnobudowlana Mirosław Piechowski ul.Sportowa 57A 76-200 Słupsk NIP: 8392414194",
     "stawka": "1,5"
@@ -309,7 +309,7 @@
     "telefon": 503555390,
     "email": "adam.humerski@op.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Adam Humerski A&A Montaż i Sprzedaż Armatury Łazienkowej ul. Dziechowo 42 89-400 Sępólno Krajeńskie NIP: 5551220444",
     "stawka": "1,5"
@@ -324,7 +324,7 @@
     "telefon": 502770706,
     "email": "serwisgizycko@wp.pl",
     "opis": "",
-    "adres_do wysylki": "IRPOL Ireneusz Poświatowski Magazyn Wamar ul.Suwalska 19C 11-500 Giżycko",
+    "adres_do_wysylki": "IRPOL Ireneusz Poświatowski Magazyn Wamar ul.Suwalska 19C 11-500 Giżycko",
     "inpost": "(brak danych)",
     "adres_fakturowy": "IRPOL Poświatowski Ireneusz ul. Mazurska 11/1 11-500 Giżycko NIP: 8451703185",
     "stawka": "1,5"
@@ -339,7 +339,7 @@
     "telefon": 608452283,
     "email": "mareklubuskie@wp.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Firma Handlowo Usługowa Marek Kowalski ul.Obrońców Pokoju 13/2 66-400 Gorzów Wlkp. NIP: 5991454442",
     "stawka": "1,5"
@@ -354,7 +354,7 @@
     "telefon": 505199342,
     "email": "trojkaserwis@wp.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Krzysztof Czyż P.U.H. TRÓJKA ul.prof. Stanisława Fischera 6 32-700 Bochnia NIP:8681184286",
     "stawka": "1,5"
@@ -369,7 +369,7 @@
     "telefon": 515181553,
     "email": "tarament.biuro@gmail.com",
     "opis": "",
-    "adres_do wysylki": "Tomasz Arament ul. Leśna 12 34-114 Nowe Dwory",
+    "adres_do_wysylki": "Tomasz Arament ul. Leśna 12 34-114 Nowe Dwory",
     "inpost": "(brak danych)",
     "adres_fakturowy": "F.H.U Montaż Tomasz Arament ul. Bolesława Czerwieńskiego 10/96 31-319 Kraków NIP: 9452252058",
     "stawka": "1,5"
@@ -384,7 +384,7 @@
     "telefon": 793602785,
     "email": "jlenart4k@gmail.com",
     "opis": "",
-    "adres_do wysylki": "Firma Budowlana CZTERY KĄTY Jacek Lenart ul. Pisarska 5/4 39-300 Mielec",
+    "adres_do_wysylki": "Firma Budowlana CZTERY KĄTY Jacek Lenart ul. Pisarska 5/4 39-300 Mielec",
     "inpost": "1. MIE20M ul. Pisarka 10 Mielec 2. MIE02M ul. Pisarka 1D Mielec",
     "adres_fakturowy": "Firma Budowlana CZTERY KĄTY Jacek Lenart ul. Pisarka 5/4 39-300 Mielec NIP: 8171917471",
     "stawka": "1,5"
@@ -399,7 +399,7 @@
     "telefon": 661084448,
     "email": "robertd135@interia.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Usługi Remontowo Wykończeniowe Robert Dziobońul.os.Gazdy 49 34-400 Nowy Targ NIP: 7352162395",
     "stawka": "1,5"
@@ -414,7 +414,7 @@
     "telefon": 606259392,
     "email": "mariusz.kielbowicz@wp.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "F.H.U. Kiełbowicz Mariusz ul.Łuszczów Drugi 11B 20-258 Łuszczów Drugi/Lublin NIP: 7121187805",
     "stawka": "1,5"
@@ -429,7 +429,7 @@
     "telefon": 669903778,
     "email": "kula.irek@gmail.com",
     "opis": "",
-    "adres_do wysylki": "F.H.U. Ireneusz Kula ul. Mickiewicza 24/3 41-300 Dąbrowa Górnicza",
+    "adres_do_wysylki": "F.H.U. Ireneusz Kula ul. Mickiewicza 24/3 41-300 Dąbrowa Górnicza",
     "inpost": "DGO01A ul. Piłsudskiego 2 41-300 Dabrowa Górnicza",
     "adres_fakturowy": "F.H.U. Ireneusz Kula ul. Mickiewicza 24/3 41-300 Dąbrowa Górnicza NIP: 6292301420",
     "stawka": "1,5"
@@ -444,7 +444,7 @@
     "telefon": "790 888 448",
     "email": "pitakadam@gmail.com",
     "opis": "",
-    "adres_do wysylki": "Adam Pitak ul. Orląt Lwowskich 20 22-400 Zamość",
+    "adres_do_wysylki": "Adam Pitak ul. Orląt Lwowskich 20 22-400 Zamość",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Adam Pitak DECOR DESIGN ul. Jana Heweliusza 8/19 22-400 Zamość NIP: 9222258519",
     "stawka": "1,5"
@@ -459,7 +459,7 @@
     "telefon": 600801118,
     "email": "serwis@appcomplex.pl",
     "opis": "",
-    "adres_do wysylki": "Przemysław Przybyła ul. Jęczmienna 21 44-190 Knurów",
+    "adres_do_wysylki": "Przemysław Przybyła ul. Jęczmienna 21 44-190 Knurów",
     "inpost": "(brak danych)",
     "adres_fakturowy": "APP COMPLEX Przemysław Przybyła ul. Jęczmienna 21 44-190 Knurów NIP: 9691398351",
     "stawka": "1,5"
@@ -474,7 +474,7 @@
     "telefon": 608484843,
     "email": "radtom1@o2.pl",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Firma Usługowo Handlowa RAD-TOM Tomasz Kownacki ul. Kwiatowa 9C 49-120 Siedliska NIP: 9910012803",
     "stawka": "1,5"
@@ -489,7 +489,7 @@
     "telefon": 604276475,
     "email": "krzysztof.tierling@gmail.com",
     "opis": "",
-    "adres_do wysylki": "(brak danych)",
+    "adres_do_wysylki": "(brak danych)",
     "inpost": "(brak danych)",
     "adres_fakturowy": "INSTAL-SERVICE DUO Krzysztof Tierling ul. Chłodna 5/5 60-224 Poznań NIP: 7791101326",
     "stawka": "1,5"
@@ -504,7 +504,7 @@
     "telefon": 696540230,
     "email": "tuski@poczta.fm",
     "opis": "",
-    "adres_do wysylki": "Piotr Tusk Al. Wojska Polskiego 32/1 80-277 Gdańsk",
+    "adres_do_wysylki": "Piotr Tusk Al. Wojska Polskiego 32/1 80-277 Gdańsk",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Aquastudio Piotr Tusk al.Wojska Polskiego 32/1 80-277 Gdańsk NIP: 5891039979",
     "stawka": "1,5"
@@ -519,7 +519,7 @@
     "telefon": "664 087 057",
     "email": "kedzierskipatryk@vp.pl",
     "opis": "",
-    "adres_do wysylki": "Patryk Kędzierski Sławsko Dolne 18 88-320 Strzelno",
+    "adres_do_wysylki": "Patryk Kędzierski Sławsko Dolne 18 88-320 Strzelno",
     "inpost": "(brak danych)",
     "adres_fakturowy": "MASTER-GLASS Patryk Kędzierski ul. Sławsko Dolne 10 88-320 Strzelno NIP: 5571589419",
     "stawka": "1,5"
@@ -534,7 +534,7 @@
     "telefon": "512 085 205",
     "email": "kominki-mazur@wp.pl",
     "opis": "",
-    "adres_do wysylki": "Krzysztof Mazur Sklep Żabka ul. Kaprysowa 4 20-843 Lublin",
+    "adres_do_wysylki": "Krzysztof Mazur Sklep Żabka ul. Kaprysowa 4 20-843 Lublin",
     "inpost": "(brak danych)",
     "adres_fakturowy": "(brak danych)",
     "stawka": "1,5"
@@ -549,7 +549,7 @@
     "telefon": "451 545 866",
     "email": "jakub.koldys96@gmail.com",
     "opis": "",
-    "adres_do wysylki": "Jakub Kołdys ul. Mikołaja Reja 6 11-500 Giżycko",
+    "adres_do_wysylki": "Jakub Kołdys ul. Mikołaja Reja 6 11-500 Giżycko",
     "inpost": "(brak danych)",
     "adres_fakturowy": "Usługi Remontowo-Budowlane JaKo Jakub Kołdys ul. Mikołaja Reja 6 11-500 Giżycko NIP: 8452000824",
     "stawka": "1,5"
@@ -564,7 +564,7 @@
     "telefon": "501 352 957",
     "email": "serwis1965@gmail.com",
     "opis": "",
-    "adres_do wysylki": "Hydro System ul.Krańcowa 63 61-048 Poznań",
+    "adres_do_wysylki": "Hydro System ul.Krańcowa 63 61-048 Poznań",
     "inpost": "(brak danych)",
     "adres_fakturowy": "(brak danych)",
     "stawka": "1,5"
