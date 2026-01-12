@@ -26,23 +26,16 @@
     padding: 6px;
   }
 
-  th {
-    background: #f0f0f0;
-  }
+  th { background: #f0f0f0; }
 
-  .popup {
-    font-size: 0.9em;
-  }
-
-  .section {
-    margin-top: 6px;
-  }
+  .popup { font-size: 0.9em; }
 
   .section-title {
     cursor: pointer;
     font-weight: bold;
     background: #f3f3f3;
     padding: 4px;
+    margin-top: 6px;
   }
 
   .section-content {
@@ -55,17 +48,14 @@
     color: #0077cc;
     margin-left: 6px;
   }
-
-  .copy:hover {
-    text-decoration: underline;
-  }
 </style>
 </head>
 
 <body>
 
 <div class="panel">
-  <input id="adresKlienta" placeholder="Adres klienta" style="width:300px;">
+  <input id="adresKlienta" placeholder="Adres klienta" style="width:280px;">
+  <button onclick="searchOnly()">Pokaż adres</button>
   <button onclick="routeForSelected()">Wyznacz trasy i koszty</button>
 </div>
 
@@ -89,7 +79,7 @@
 
 <script>
 /* ===============================
-   USTAWIENIA
+   KONFIGURACJA
 ================================ */
 const stawkaDomyslna = 1.2;
 const colors = ['red','blue','green','purple','orange','brown','black'];
@@ -107,6 +97,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 const routesLayer = L.layerGroup().addTo(map);
 const selected = new Map();
 const markers = new Map();
+let clientMarker = null;
 
 /* ===============================
    IKONY
@@ -128,14 +119,13 @@ const iconSelected = L.icon({
 /* ===============================
    NARZĘDZIA
 ================================ */
-function copyFrom(id) {
-  navigator.clipboard.writeText(document.getElementById(id).innerText);
-  alert("Skopiowano do schowka");
-}
-
 function toggleSection(id) {
   const el = document.getElementById(id);
-  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+function copyFrom(id) {
+  navigator.clipboard.writeText(document.getElementById(id).innerText);
 }
 
 /* ===============================
@@ -152,40 +142,23 @@ fetch('serwisanci.json')
       const marker = L.marker([s.lat, s.lon], { icon: iconNormal }).addTo(map);
       markers.set(s.id, marker);
 
-      marker.on('click', () => routesLayer.clearLayers());
-
       marker.bindPopup(`
         <div class="popup">
           <b>${s.nazwa}</b><br>
           ${s.miasto}<br>
           <small>${s.opis || ""}</small><br><br>
 
-          📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
-          ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
+          📞 ${s.telefon}<br>
+          ✉️ ${s.email}<br>
 
-          <div class="section">
-            <div class="section-title" onclick="toggleSection('wys${s.id}')">📦 Adres do wysyłki</div>
-            <div id="wys${s.id}" class="section-content">
-              ${s.adres_do_wysylki || "-"}
-              <span class="copy" onclick="copyFrom('wys${s.id}')">📋</span>
-            </div>
-          </div>
+          <div class="section-title" onclick="toggleSection('wys${s.id}')">📦 Adres do wysyłki</div>
+          <div id="wys${s.id}" class="section-content">${s.adres_do_wysylki || "-"}</div>
 
-          <div class="section">
-            <div class="section-title" onclick="toggleSection('inp${s.id}')">📮 InPost</div>
-            <div id="inp${s.id}" class="section-content">
-              ${s.inpost || "-"}
-              <span class="copy" onclick="copyFrom('inp${s.id}')">📋</span>
-            </div>
-          </div>
+          <div class="section-title" onclick="toggleSection('inp${s.id}')">📮 InPost</div>
+          <div id="inp${s.id}" class="section-content">${s.inpost || "-"}</div>
 
-          <div class="section">
-            <div class="section-title" onclick="toggleSection('fak${s.id}')">🧾 Adres fakturowy</div>
-            <div id="fak${s.id}" class="section-content">
-              ${s.adres_fakturowy || "-"}
-              <span class="copy" onclick="copyFrom('fak${s.id}')">📋</span>
-            </div>
-          </div>
+          <div class="section-title" onclick="toggleSection('fak${s.id}')">🧾 Adres fakturowy</div>
+          <div id="fak${s.id}" class="section-content">${s.adres_fakturowy || "-"}</div>
 
           <br>
           <label>
@@ -202,7 +175,6 @@ fetch('serwisanci.json')
    ZAZNACZANIE
 ================================ */
 function toggleSelect(id, nazwa, lat, lon, stawka, checked) {
-
   const marker = markers.get(id);
 
   if (checked) {
@@ -210,7 +182,7 @@ function toggleSelect(id, nazwa, lat, lon, stawka, checked) {
       nazwa,
       lat,
       lon,
-      stawka: Number(stawka),
+      stawka,
       color: colors[colorIndex++ % colors.length]
     });
     marker.setIcon(iconSelected);
@@ -222,7 +194,29 @@ function toggleSelect(id, nazwa, lat, lon, stawka, checked) {
 }
 
 /* ===============================
-   ROUTING + TABELA
+   TYLKO WYSZUKIWANIE ADRESU
+================================ */
+function searchOnly() {
+  const address = document.getElementById('adresKlienta').value;
+  if (!address) return;
+
+  fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
+    .then(r => r.json())
+    .then(res => {
+      if (!res[0]) return;
+
+      if (clientMarker) map.removeLayer(clientMarker);
+
+      clientMarker = L.marker([res[0].lat, res[0].lon]).addTo(map)
+        .bindPopup("Adres klienta")
+        .openPopup();
+
+      map.setView([res[0].lat, res[0].lon], 13);
+    });
+}
+
+/* ===============================
+   ROUTING
 ================================ */
 function routeForSelected() {
 
@@ -235,8 +229,6 @@ function routeForSelected() {
   fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
     .then(r => r.json())
     .then(dest => {
-
-      if (!dest[0]) return;
 
       const dlat = dest[0].lat;
       const dlon = dest[0].lon;
