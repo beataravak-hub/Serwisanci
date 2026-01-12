@@ -8,36 +8,57 @@
 
 <style>
   body { margin: 0; font-family: Arial, sans-serif; }
-  #map { height: 100vh; }
+  #map { height: 70vh; }
 
-  .popup input {
-    width: 100%;
-    margin-top: 6px;
-    padding: 4px;
+  .panel {
+    padding: 10px;
+    background: #fff;
   }
 
-  .popup button {
+  table {
     width: 100%;
-    margin-top: 6px;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  th, td {
+    border: 1px solid #ccc;
     padding: 6px;
+    text-align: left;
+  }
+
+  th {
+    background: #f0f0f0;
     cursor: pointer;
   }
 
-  .copy {
-    cursor: pointer;
-    margin-left: 6px;
-    color: #0077cc;
-    font-size: 0.9em;
-  }
-
-  .copy:hover {
-    text-decoration: underline;
-  }
+  .popup input { width: 100%; margin-top: 6px; }
+  .popup label { font-size: 0.9em; }
 </style>
 </head>
 
 <body>
+
+<div class="panel">
+  <input id="adresKlienta" placeholder="Adres klienta" style="width:300px;">
+  <button onclick="routeForSelected()">Wyznacz trasy i koszty</button>
+</div>
+
 <div id="map"></div>
+
+<div class="panel">
+  <h3>Wyniki (posortowane od najbliższego)</h3>
+  <table id="results">
+    <thead>
+      <tr>
+        <th>Serwisant</th>
+        <th>Dystans (km)</th>
+        <th>Koszt (zł)</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
@@ -46,6 +67,8 @@
    USTAWIENIA
 ================================ */
 const stawkaDomyslna = 1.2;
+const colors = ['red','blue','green','purple','orange','brown','black'];
+let colorIndex = 0;
 
 /* ===============================
    MAPA
@@ -55,30 +78,25 @@ const map = L.map('map').setView([52.1, 19.4], 6);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
+
+const routesLayer = L.layerGroup().addTo(map);
+const selected = new Map();
+
+/* ===============================
+   IKONA
+================================ */
 const kluczIcon = L.icon({
   iconUrl: 'klucz.png',
-  iconSize: [36, 36],      // rozmiar ikony
-  iconAnchor: [18, 36],    // punkt "wbicia" w mapę
-  popupAnchor: [0, -36]    // gdzie otwiera się popup
+  iconSize: [36,36],
+  iconAnchor: [18,36],
+  popupAnchor: [0,-36]
 });
-/* ===============================
-   KOPIOWANIE TEKSTU
-================================ */
-function copyFrom(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  navigator.clipboard.writeText(el.innerText);
-  alert("Skopiowano do schowka");
-}
 
 /* ===============================
    ŁADOWANIE SERWISANTÓW
 ================================ */
 fetch('serwisanci.json')
-  .then(res => {
-    if (!res.ok) throw new Error("Nie można wczytać serwisanci.json");
-    return res.json();
-  })
+  .then(r => r.json())
   .then(data => {
 
     data.forEach(s => {
@@ -87,91 +105,101 @@ fetch('serwisanci.json')
 
       const marker = L.marker([s.lat, s.lon], { icon: kluczIcon }).addTo(map);
 
+      marker.on('click', () => routesLayer.clearLayers());
+
       marker.bindPopup(`
         <div class="popup">
           <b>${s.nazwa}</b><br>
           ${s.miasto}<br>
           <small>${s.opis || ""}</small><br><br>
 
-          📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
-          ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
-
-          💰 Stawka: ${s.stawka ?? stawkaDomyslna} zł/km<br><br>
-
-          📦 <b>Adres do wysyłki</b><br>
-          <span id="wys${s.id}">${s.adres_do_wysylki || "-"}</span>
-          <span class="copy" onclick="copyFrom('wys${s.id}')">📋 kopiuj</span><br><br>
-
-          📮 <b>InPost</b><br>
-          <span id="inp${s.id}">${s.inpost || "-"}</span>
-          <span class="copy" onclick="copyFrom('inp${s.id}')">📋 kopiuj</span><br><br>
-
-          🧾 <b>Adres fakturowy</b><br>
-          <span id="fak${s.id}">${s.adres_fakturowy || "-"}</span>
-          <span class="copy" onclick="copyFrom('fak${s.id}')">📋 kopiuj</span><br><br>
-
-          <input id="a${s.id}" placeholder="Adres klienta">
-          <button onclick="route(${s.lat}, ${s.lon}, 'a${s.id}', ${s.stawka ?? stawkaDomyslna})">
-            Wyznacz trasę i koszt
-          </button>
+          <label>
+            <input type="checkbox"
+              onchange="toggleSelect(${s.id}, '${s.nazwa}', ${s.lat}, ${s.lon}, ${s.stawka ?? stawkaDomyslna}, this.checked)">
+            zaznacz serwisanta
+          </label>
         </div>
       `);
     });
-  })
-  .catch(err => {
-    console.error(err);
-    alert("Błąd wczytywania danych serwisantów");
   });
 
 /* ===============================
-   ROUTING + KOSZT
+   ZAZNACZANIE
 ================================ */
-let routeLayer;
-
-function route(lat, lon, inputId, rate) {
-
-  rate = Number(rate);
-  if (isNaN(rate)) rate = stawkaDomyslna;
-
-  const address = document.getElementById(inputId).value;
-  if (!address) {
-    alert("Wpisz adres klienta");
-    return;
+function toggleSelect(id, nazwa, lat, lon, stawka, checked) {
+  if (checked) {
+    selected.set(id, { nazwa, lat, lon, stawka: Number(stawka), color: colors[colorIndex++ % colors.length] });
+  } else {
+    selected.delete(id);
   }
+}
+
+/* ===============================
+   ROUTING WIELOKROTNY
+================================ */
+function routeForSelected() {
+
+  const address = document.getElementById('adresKlienta').value;
+  if (!address || selected.size === 0) return;
+
+  routesLayer.clearLayers();
+  document.querySelector('#results tbody').innerHTML = '';
 
   fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
     .then(r => r.json())
     .then(dest => {
 
-      if (!dest[0]) {
-        alert("Nie znaleziono adresu klienta");
-        return;
-      }
+      if (!dest[0]) return;
 
       const dlat = dest[0].lat;
       const dlon = dest[0].lon;
+      const bounds = [];
 
-      fetch(`https://router.project-osrm.org/route/v1/driving/${lon},${lat};${dlon},${dlat}?overview=full&geometries=geojson`)
-        .then(r => r.json())
-        .then(res => {
+      const results = [];
 
-          const km = res.routes[0].distance / 1000;
-          const cost = (km * rate).toFixed(2);
+      selected.forEach(s => {
 
-          if (routeLayer) map.removeLayer(routeLayer);
+        fetch(`https://router.project-osrm.org/route/v1/driving/${s.lon},${s.lat};${dlon},${dlat}?overview=full&geometries=geojson`)
+          .then(r => r.json())
+          .then(res => {
 
-          routeLayer = L.geoJSON(res.routes[0].geometry, {
-            style: { color: 'red', weight: 4 }
-          }).addTo(map);
+            const km = res.routes[0].distance / 1000;
+            const cost = (km * s.stawka).toFixed(2);
 
-          alert(
-            `Dystans: ${km.toFixed(1)} km\n` +
-            `Koszt: ${cost} zł\n\n` +
-            `Kwota orientacyjna`
-          );
-        });
+            const layer = L.geoJSON(res.routes[0].geometry, {
+              style: { color: s.color, weight: 4 }
+            }).addTo(routesLayer);
+
+            bounds.push(layer.getBounds());
+
+            results.push({ nazwa: s.nazwa, km, cost });
+
+            if (results.length === selected.size) {
+              results.sort((a,b) => a.km - b.km);
+              renderTable(results);
+              map.fitBounds(L.featureGroup(bounds).getBounds());
+            }
+          });
+      });
     });
 }
+
+/* ===============================
+   TABELA
+================================ */
+function renderTable(results) {
+  const tbody = document.querySelector('#results tbody');
+  results.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${r.nazwa}</td>
+      <td>${r.km.toFixed(1)}</td>
+      <td>${r.cost}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 </script>
+
 </body>
 </html>
