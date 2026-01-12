@@ -8,7 +8,7 @@
 
 <style>
   body { margin: 0; font-family: Arial, sans-serif; }
-  #map { height: 70vh; }
+  #map { height: 65vh; }
 
   .panel {
     padding: 10px;
@@ -24,16 +24,29 @@
   th, td {
     border: 1px solid #ccc;
     padding: 6px;
-    text-align: left;
   }
 
   th {
     background: #f0f0f0;
-    cursor: pointer;
   }
 
-  .popup input { width: 100%; margin-top: 6px; }
-  .popup label { font-size: 0.9em; }
+  .popup {
+    font-size: 0.9em;
+  }
+
+  .popup b {
+    font-size: 1em;
+  }
+
+  .copy {
+    cursor: pointer;
+    color: #0077cc;
+    margin-left: 6px;
+  }
+
+  .copy:hover {
+    text-decoration: underline;
+  }
 </style>
 </head>
 
@@ -47,8 +60,8 @@
 <div id="map"></div>
 
 <div class="panel">
-  <h3>Wyniki (posortowane od najbliższego)</h3>
-  <table id="results">
+  <h3>Wyniki (od najbliższego)</h3>
+  <table>
     <thead>
       <tr>
         <th>Serwisant</th>
@@ -56,7 +69,7 @@
         <th>Koszt (zł)</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="results"></tbody>
   </table>
 </div>
 
@@ -93,6 +106,14 @@ const kluczIcon = L.icon({
 });
 
 /* ===============================
+   KOPIOWANIE
+================================ */
+function copyFrom(id) {
+  navigator.clipboard.writeText(document.getElementById(id).innerText);
+  alert("Skopiowano do schowka");
+}
+
+/* ===============================
    ŁADOWANIE SERWISANTÓW
 ================================ */
 fetch('serwisanci.json')
@@ -113,6 +134,23 @@ fetch('serwisanci.json')
           ${s.miasto}<br>
           <small>${s.opis || ""}</small><br><br>
 
+          📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
+          ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
+
+          💰 Stawka: ${s.stawka ?? stawkaDomyslna} zł/km<br><br>
+
+          📦 <b>Adres do wysyłki</b><br>
+          <span id="wys${s.id}">${s.adres_do_wysylki || "-"}</span>
+          <span class="copy" onclick="copyFrom('wys${s.id}')">📋 kopiuj</span><br><br>
+
+          📮 <b>InPost</b><br>
+          <span id="inp${s.id}">${s.inpost || "-"}</span>
+          <span class="copy" onclick="copyFrom('inp${s.id}')">📋 kopiuj</span><br><br>
+
+          🧾 <b>Adres fakturowy</b><br>
+          <span id="fak${s.id}">${s.adres_fakturowy || "-"}</span>
+          <span class="copy" onclick="copyFrom('fak${s.id}')">📋 kopiuj</span><br><br>
+
           <label>
             <input type="checkbox"
               onchange="toggleSelect(${s.id}, '${s.nazwa}', ${s.lat}, ${s.lon}, ${s.stawka ?? stawkaDomyslna}, this.checked)">
@@ -128,14 +166,20 @@ fetch('serwisanci.json')
 ================================ */
 function toggleSelect(id, nazwa, lat, lon, stawka, checked) {
   if (checked) {
-    selected.set(id, { nazwa, lat, lon, stawka: Number(stawka), color: colors[colorIndex++ % colors.length] });
+    selected.set(id, {
+      nazwa,
+      lat,
+      lon,
+      stawka: Number(stawka),
+      color: colors[colorIndex++ % colors.length]
+    });
   } else {
     selected.delete(id);
   }
 }
 
 /* ===============================
-   ROUTING WIELOKROTNY
+   ROUTING + TABELA
 ================================ */
 function routeForSelected() {
 
@@ -143,7 +187,7 @@ function routeForSelected() {
   if (!address || selected.size === 0) return;
 
   routesLayer.clearLayers();
-  document.querySelector('#results tbody').innerHTML = '';
+  document.getElementById('results').innerHTML = '';
 
   fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
     .then(r => r.json())
@@ -154,7 +198,6 @@ function routeForSelected() {
       const dlat = dest[0].lat;
       const dlon = dest[0].lon;
       const bounds = [];
-
       const results = [];
 
       selected.forEach(s => {
@@ -171,7 +214,6 @@ function routeForSelected() {
             }).addTo(routesLayer);
 
             bounds.push(layer.getBounds());
-
             results.push({ nazwa: s.nazwa, km, cost });
 
             if (results.length === selected.size) {
@@ -188,7 +230,7 @@ function routeForSelected() {
    TABELA
 ================================ */
 function renderTable(results) {
-  const tbody = document.querySelector('#results tbody');
+  const tbody = document.getElementById('results');
   results.forEach(r => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
