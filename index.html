@@ -34,8 +34,20 @@
     font-size: 0.9em;
   }
 
-  .popup b {
-    font-size: 1em;
+  .section {
+    margin-top: 6px;
+  }
+
+  .section-title {
+    cursor: pointer;
+    font-weight: bold;
+    background: #f3f3f3;
+    padding: 4px;
+  }
+
+  .section-content {
+    display: none;
+    padding: 4px;
   }
 
   .copy {
@@ -94,27 +106,40 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 const routesLayer = L.layerGroup().addTo(map);
 const selected = new Map();
+const markers = new Map();
 
 /* ===============================
-   IKONA
+   IKONY
 ================================ */
-const kluczIcon = L.icon({
+const iconNormal = L.icon({
   iconUrl: 'klucz.png',
   iconSize: [36,36],
   iconAnchor: [18,36],
   popupAnchor: [0,-36]
 });
 
+const iconSelected = L.icon({
+  iconUrl: 'klucz-selected.png',
+  iconSize: [36,36],
+  iconAnchor: [18,36],
+  popupAnchor: [0,-36]
+});
+
 /* ===============================
-   KOPIOWANIE
+   NARZĘDZIA
 ================================ */
 function copyFrom(id) {
   navigator.clipboard.writeText(document.getElementById(id).innerText);
   alert("Skopiowano do schowka");
 }
 
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
 /* ===============================
-   ŁADOWANIE SERWISANTÓW
+   SERWISANCI
 ================================ */
 fetch('serwisanci.json')
   .then(r => r.json())
@@ -124,7 +149,8 @@ fetch('serwisanci.json')
 
       if (!s.lat || !s.lon) return;
 
-      const marker = L.marker([s.lat, s.lon], { icon: kluczIcon }).addTo(map);
+      const marker = L.marker([s.lat, s.lon], { icon: iconNormal }).addTo(map);
+      markers.set(s.id, marker);
 
       marker.on('click', () => routesLayer.clearLayers());
 
@@ -137,20 +163,31 @@ fetch('serwisanci.json')
           📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
           ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
 
-          💰 Stawka: ${s.stawka ?? stawkaDomyslna} zł/km<br><br>
+          <div class="section">
+            <div class="section-title" onclick="toggleSection('wys${s.id}')">📦 Adres do wysyłki</div>
+            <div id="wys${s.id}" class="section-content">
+              ${s.adres_do_wysylki || "-"}
+              <span class="copy" onclick="copyFrom('wys${s.id}')">📋</span>
+            </div>
+          </div>
 
-          📦 <b>Adres do wysyłki</b><br>
-          <span id="wys${s.id}">${s.adres_do_wysylki || "-"}</span>
-          <span class="copy" onclick="copyFrom('wys${s.id}')">📋 kopiuj</span><br><br>
+          <div class="section">
+            <div class="section-title" onclick="toggleSection('inp${s.id}')">📮 InPost</div>
+            <div id="inp${s.id}" class="section-content">
+              ${s.inpost || "-"}
+              <span class="copy" onclick="copyFrom('inp${s.id}')">📋</span>
+            </div>
+          </div>
 
-          📮 <b>InPost</b><br>
-          <span id="inp${s.id}">${s.inpost || "-"}</span>
-          <span class="copy" onclick="copyFrom('inp${s.id}')">📋 kopiuj</span><br><br>
+          <div class="section">
+            <div class="section-title" onclick="toggleSection('fak${s.id}')">🧾 Adres fakturowy</div>
+            <div id="fak${s.id}" class="section-content">
+              ${s.adres_fakturowy || "-"}
+              <span class="copy" onclick="copyFrom('fak${s.id}')">📋</span>
+            </div>
+          </div>
 
-          🧾 <b>Adres fakturowy</b><br>
-          <span id="fak${s.id}">${s.adres_fakturowy || "-"}</span>
-          <span class="copy" onclick="copyFrom('fak${s.id}')">📋 kopiuj</span><br><br>
-
+          <br>
           <label>
             <input type="checkbox"
               onchange="toggleSelect(${s.id}, '${s.nazwa}', ${s.lat}, ${s.lon}, ${s.stawka ?? stawkaDomyslna}, this.checked)">
@@ -165,6 +202,9 @@ fetch('serwisanci.json')
    ZAZNACZANIE
 ================================ */
 function toggleSelect(id, nazwa, lat, lon, stawka, checked) {
+
+  const marker = markers.get(id);
+
   if (checked) {
     selected.set(id, {
       nazwa,
@@ -173,8 +213,11 @@ function toggleSelect(id, nazwa, lat, lon, stawka, checked) {
       stawka: Number(stawka),
       color: colors[colorIndex++ % colors.length]
     });
+    marker.setIcon(iconSelected);
+    marker.closePopup();
   } else {
     selected.delete(id);
+    marker.setIcon(iconNormal);
   }
 }
 
