@@ -10,10 +10,7 @@
   body { margin: 0; font-family: Arial, sans-serif; }
   #map { height: 65vh; }
 
-  .panel {
-    padding: 10px;
-    background: #fff;
-  }
+  .panel { padding: 10px; background: #fff; }
 
   table {
     width: 100%;
@@ -143,11 +140,9 @@ fetch('serwisanci.json')
       const marker = L.marker([s.lat, s.lon], { icon: iconNormal }).addTo(map);
       markers.set(s.id, marker);
 
-      marker.on('click', () => {
-        routesLayer.clearLayers();
-      });
+      marker.on('click', () => routesLayer.clearLayers());
 
-      marker.bindPopup(`
+      marker.bindPopup(() => `
         <div class="popup">
           <b>${s.nazwa}</b><br>
           ${s.miasto}<br>
@@ -175,24 +170,25 @@ fetch('serwisanci.json')
           </div>
 
           <br>
-          <label>
-            <input type="checkbox"
-              onchange="toggleSelect(${s.id}, '${s.nazwa}', ${s.lat}, ${s.lon}, ${s.stawka ?? stawkaDomyslna}, this)">
-            zaznacz serwisanta
-          </label>
+          <button onclick="toggleSelect(${s.id}, '${s.nazwa}', ${s.lat}, ${s.lon}, ${s.stawka ?? stawkaDomyslna})">
+            ${selected.has(s.id) ? 'Odznacz' : 'Zaznacz'} serwisanta
+          </button>
         </div>
       `);
     });
   });
 
 /* ===============================
-   ZAZNACZANIE / ODZNACZANIE
+   ZAZNACZ / ODZNACZ
 ================================ */
-function toggleSelect(id, nazwa, lat, lon, stawka, checkbox) {
+function toggleSelect(id, nazwa, lat, lon, stawka) {
 
   const marker = markers.get(id);
 
-  if (checkbox.checked) {
+  if (selected.has(id)) {
+    selected.delete(id);
+    marker.setIcon(iconNormal);
+  } else {
     selected.set(id, {
       nazwa,
       lat,
@@ -202,9 +198,6 @@ function toggleSelect(id, nazwa, lat, lon, stawka, checkbox) {
     });
     marker.setIcon(iconSelected);
     marker.closePopup();
-  } else {
-    selected.delete(id);
-    marker.setIcon(iconNormal);
   }
 }
 
@@ -236,8 +229,16 @@ function searchOnly() {
 ================================ */
 function routeForSelected() {
 
+  if (selected.size === 0) {
+    alert("Nie zaznaczono serwisantów");
+    return;
+  }
+
   const address = document.getElementById('adresKlienta').value;
-  if (!address || selected.size === 0) return;
+  if (!address) {
+    alert("Podaj adres klienta");
+    return;
+  }
 
   routesLayer.clearLayers();
   document.getElementById('results').innerHTML = '';
