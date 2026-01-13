@@ -117,7 +117,7 @@ const iconSelected = L.icon({
 });
 
 /* ===============================
-   NARZĘDZIA
+   POMOCNICZE
 ================================ */
 function toggleSection(id) {
   const el = document.getElementById(id);
@@ -126,6 +126,7 @@ function toggleSection(id) {
 
 function copyFrom(id) {
   navigator.clipboard.writeText(document.getElementById(id).innerText);
+  alert("Skopiowano do schowka");
 }
 
 /* ===============================
@@ -142,28 +143,41 @@ fetch('serwisanci.json')
       const marker = L.marker([s.lat, s.lon], { icon: iconNormal }).addTo(map);
       markers.set(s.id, marker);
 
+      marker.on('click', () => {
+        routesLayer.clearLayers();
+      });
+
       marker.bindPopup(`
         <div class="popup">
           <b>${s.nazwa}</b><br>
           ${s.miasto}<br>
           <small>${s.opis || ""}</small><br><br>
 
-          📞 ${s.telefon}<br>
-          ✉️ ${s.email}<br>
+          📞 <a href="tel:${s.telefon}">${s.telefon}</a><br>
+          ✉️ <a href="mailto:${s.email}">${s.email}</a><br><br>
 
           <div class="section-title" onclick="toggleSection('wys${s.id}')">📦 Adres do wysyłki</div>
-          <div id="wys${s.id}" class="section-content">${s.adres_do_wysylki || "-"}</div>
+          <div id="wys${s.id}" class="section-content">
+            ${s.adres_do_wysylki || "-"}
+            <span class="copy" onclick="copyFrom('wys${s.id}')">📋</span>
+          </div>
 
           <div class="section-title" onclick="toggleSection('inp${s.id}')">📮 InPost</div>
-          <div id="inp${s.id}" class="section-content">${s.inpost || "-"}</div>
+          <div id="inp${s.id}" class="section-content">
+            ${s.inpost || "-"}
+            <span class="copy" onclick="copyFrom('inp${s.id}')">📋</span>
+          </div>
 
           <div class="section-title" onclick="toggleSection('fak${s.id}')">🧾 Adres fakturowy</div>
-          <div id="fak${s.id}" class="section-content">${s.adres_fakturowy || "-"}</div>
+          <div id="fak${s.id}" class="section-content">
+            ${s.adres_fakturowy || "-"}
+            <span class="copy" onclick="copyFrom('fak${s.id}')">📋</span>
+          </div>
 
           <br>
           <label>
             <input type="checkbox"
-              onchange="toggleSelect(${s.id}, '${s.nazwa}', ${s.lat}, ${s.lon}, ${s.stawka ?? stawkaDomyslna}, this.checked)">
+              onchange="toggleSelect(${s.id}, '${s.nazwa}', ${s.lat}, ${s.lon}, ${s.stawka ?? stawkaDomyslna}, this)">
             zaznacz serwisanta
           </label>
         </div>
@@ -172,12 +186,13 @@ fetch('serwisanci.json')
   });
 
 /* ===============================
-   ZAZNACZANIE
+   ZAZNACZANIE / ODZNACZANIE
 ================================ */
-function toggleSelect(id, nazwa, lat, lon, stawka, checked) {
+function toggleSelect(id, nazwa, lat, lon, stawka, checkbox) {
+
   const marker = markers.get(id);
 
-  if (checked) {
+  if (checkbox.checked) {
     selected.set(id, {
       nazwa,
       lat,
@@ -194,7 +209,7 @@ function toggleSelect(id, nazwa, lat, lon, stawka, checked) {
 }
 
 /* ===============================
-   TYLKO WYSZUKIWANIE ADRESU
+   TYLKO ADRES
 ================================ */
 function searchOnly() {
   const address = document.getElementById('adresKlienta').value;
@@ -203,6 +218,7 @@ function searchOnly() {
   fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`)
     .then(r => r.json())
     .then(res => {
+
       if (!res[0]) return;
 
       if (clientMarker) map.removeLayer(clientMarker);
