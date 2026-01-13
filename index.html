@@ -283,17 +283,24 @@ function routeForSelected() {
 ================================ */
 function renderTable(results) {
   const tbody = document.getElementById('results');
+  tbody.innerHTML = '';
+
   results.forEach(r => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${r.nazwa}</td>
-      <td>${r.km.toFixed(1)}</td>
-      <td>${r.cost}</td>
+      <td>${r.km.toFixed(1)} km</td>
+      <td>${r.cost} zł</td>
     `;
     tbody.appendChild(tr);
   });
+
+  // 📱 mobilne przewinięcie do wyników
+  document.querySelector('.panel:last-of-type')
+    .scrollIntoView({ behavior: 'smooth' });
 }
 </script>
 
 </body>
 </html>
+
