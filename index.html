@@ -45,6 +45,19 @@
     color: #0077cc;
     margin-left: 6px;
   }
+  @media (max-width: 768px) {
+
+  .panel:first-of-type {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #ccc;
+  }
+
+  #map {
+    height: 50vh; /* WAŻNE – mniejsza mapa */
+  }
+}
 </style>
 </head>
 
@@ -303,4 +316,5 @@ function renderTable(results) {
 
 </body>
 </html>
+
 
