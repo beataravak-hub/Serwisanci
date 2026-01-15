@@ -568,7 +568,7 @@
     "inpost": "(brak danych)",
     "adres_fakturowy": "(brak danych)",
     "stawka":  1.5
-  }
+  },
   {
     "id": 39,
     "nazwa": "RAVAK",
@@ -576,12 +576,12 @@
     "adres": "Kałęczyn ul. Radziejowicka 124",
     "lat": 52.080870082894165,
     "lon": 20.612823316838732,
-    "telefon": "-",
+    "telefon": "227554032",
     "email": "serwis@ravak.pl",
     "opis": "serwis firmowy",
-    "adres_do_wysylki": "-",
-    "inpost": "-",
-    "adres_fakturowy": "-",
+    "adres_do_wysylki": "Ravak Polska S.A. ul. Radziejowicka 124 05-825 Kałęczyn",
+    "inpost": "ADM01M",
+    "adres_fakturowy": "Ravak Polska S.A. ul. Radziejowicka 124 05-825 Kałęczyn NIP: 5341373271",
     "stawka":  1.5
   }
 ]
